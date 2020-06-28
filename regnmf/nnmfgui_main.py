@@ -7,16 +7,16 @@ and Jan Sölter (jan_soelter@yahoo.com) at FU-Berlin.
 Copyright (c) 2012. All rights reserved.
 """
 import os, glob, json, sys
-import ImageAnalysisComponents as bf
-import runlib_new
+from . import ImageAnalysisComponents as bf
+from . import runlib_new
 # import QtStuff
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 # import GUILayout
-from main_window import Ui_MainGuiWin
-from conversion_dialog import Ui_conversion_dialog
+from .main_window import Ui_MainGuiWin
+from .conversion_dialog import Ui_conversion_dialog
 import logging as l
 l.basicConfig(level=l.DEBUG,
             format='%(asctime)s %(levelname)s: %(message)s',
@@ -150,7 +150,7 @@ class MainGui(QtGui.QMainWindow, Ui_MainGuiWin):
                 ts.stim_window = stim_window
                 ts.save(os.path.join(folder_path, 'timeseries'))
                 if progdialog.wasCanceled():
-                    print 'hui ui ui'
+                    print('hui ui ui')
                     break
 
             progdialog.setValue(len(to_convert))
@@ -169,7 +169,7 @@ class MainGui(QtGui.QMainWindow, Ui_MainGuiWin):
         self.highpass_spinner.setValue(config['highpass'])
         self.spatial_spinner.setValue(config['spatial_down'])
         self.methods_box.clear()
-        self.methods_box.insertItems(0, config['methods'].keys())
+        self.methods_box.insertItems(0, list(config['methods'].keys()))
         self.methods_box.setCurrentIndex(self.methods_box.findText(config['selected_method']))
         self.format_box.setCurrentIndex(self.format_box.findText(config['format']))
         self.sparseness_spinner.setValue(config['methods']['nnma']['sparse_param'])
@@ -180,7 +180,7 @@ class MainGui(QtGui.QMainWindow, Ui_MainGuiWin):
 
     def save_controls(self, export_file=''):
         '''after each click, save settings to config file'''
-        print 'save_controls called, export file is: %s' % export_file
+        print('save_controls called, export file is: %s' % export_file)
         config = {}
         config['lowpass'] = self.lowpass_spinner.value()
         config['highpass'] = self.highpass_spinner.value()
@@ -253,7 +253,7 @@ class MainGui(QtGui.QMainWindow, Ui_MainGuiWin):
         progdialog.setWindowModality(QtCore.Qt.WindowModal)
 
         for file_ind, filename in enumerate(self.filelist):
-            print self.fname, filename
+            print(self.fname, filename)
             progdialog.setValue(file_ind)
             if progdialog.wasCanceled():
                 break

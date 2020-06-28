@@ -6,7 +6,7 @@ Created by  on 2012-01-27.
 """
 
 import os
-import ImageAnalysisComponents as bf
+from . import ImageAnalysisComponents as bf
 import numpy as np
 import pylab as plt
 
@@ -68,7 +68,7 @@ def preprocess(ts, config):
 
     # cut baseline signal
     # TODO: set this as parameter
-    print ts._series.shape
+    print(ts._series.shape)
     baseline = trial_mean(bf.CutOut((0, 10))(ts))
 
     # temporal downsampling

@@ -53,7 +53,7 @@ class regHALS(object):
         neg_time: bool, default False
             it True negative activations are allowed
         init: 'convex' , 'random' or dictionary with keys 'A' and 'X'
-	    default 'convex'
+        default 'convex'
             inital guess of factorization
         eps: float, default 1E-5
             value to avoid divisions by zero
@@ -92,7 +92,7 @@ class regHALS(object):
         nrm_Y = np.linalg.norm(Y)
 
         if self.verbose:
-            print 'init completed'
+            print('init completed')
 
         while True:
             if count >= self.maxcount: break
@@ -104,7 +104,7 @@ class regHALS(object):
             delta_obj = obj - obj_old
             if self.verbose:
                 if count % self.verbose == 0:
-                    print "count=%3d obj=%E d_obj=%E" % (count, obj, delta_obj)
+                    print("count=%3d obj=%E d_obj=%E" % (count, obj, delta_obj))
 
             # delta_obj should be "almost negative" and small enough:
             if -self.eps < delta_obj <= 0:
@@ -113,8 +113,8 @@ class regHALS(object):
             obj_old = obj
 
         if self.verbose:
-            print "FINISHED:"
-            print "count=%3d obj=%E d_obj=%E" % (count, obj, delta_obj)
+            print("FINISHED:")
+            print("count=%3d obj=%E d_obj=%E" % (count, obj, delta_obj))
 
         return A, X, obj
 
@@ -130,12 +130,12 @@ class regHALS(object):
             out = convex_cone(Y, self.k)
             X = np.array(out['base'])
             A = np.array(out['timecourses']).T
-	
-	elif type(self.init) == dict:
-	    X = self.init['X']
-	    A = self.init['A']
+    
+        elif type(self.init) == dict:
+            X = self.init['X']
+            A = self.init['A']
         
-	return A, X
+        return A, X
 
     def create_nn_matrix(self):
         """creates neighborhood matrix"""

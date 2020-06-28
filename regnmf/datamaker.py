@@ -53,7 +53,7 @@ def adjusted_gamma(mean, var):
     scale = var / mean
     shape = mean / scale
     if shape > 1:
-        print '!!! Warning !!! - shape parameter: ', str(shape)
+        print('!!! Warning !!! - shape parameter: ', str(shape))
     return gamma(shape, scale=scale)
 
 def crosscor(a1, a2):
@@ -88,7 +88,7 @@ class Dataset():
         pixel = np.indices(param['shape'])
         p_dist = param['shape'][0] / num_grid
         self.points = np.indices((num_grid, num_grid)) * p_dist + p_dist
-        self.points = zip(self.points[0].flatten(), self.points[1].flatten())
+        self.points = list(zip(self.points[0].flatten(), self.points[1].flatten()))
         random.shuffle(self.points)
         components = [gaussian_influence(mu, param['width'])(pixel[0], pixel[1])
                   for mu in self.points[:param['latents']]]
@@ -138,7 +138,7 @@ class Dataset():
         matchid = np.nanargmax(np.abs(sp_cor), 0)
 
         # temporal correlation at best spatial corralation
-        st_cor = np.abs(tmp_cor[matchid, range(self.spt_sources.shape[0])])
+        st_cor = np.abs(tmp_cor[matchid, list(range(self.spt_sources.shape[0]))])
         return matchid, st_cor, sp_cor
 
     def mse2source(self, estimator, local=0):

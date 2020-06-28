@@ -25,7 +25,7 @@ class ProgressBar:
             self.animate = self.animate_noipython
 
     def animate_ipython(self, iter):
-        print '\r', self,
+        print('\r', self, end=' ')
         sys.stdout.flush()
         self.update_iteration(iter + 1)
 
